@@ -62,6 +62,8 @@ export const useStrategy = (klines, symbol) => {
   const { supportLevels, resistanceLevels } = detectSupportResistanceV2(klines)
   console.log("关键支撑：", supportLevels.map(s => `${s.level} (${s.count}次)`))
   console.log("关键压力：", resistanceLevels.map(r => `${r.level} (${r.count}次)`))
+  const keySupport = supportLevels.at(-1)?.level || current
+  const keyResistance = resistanceLevels.at(-1)?.level || current
 
   // 7. 形态识别 + 量价分析
   const patternText = detectCandlestickPatterns(klines).join('，') || '无明显K线形态'
