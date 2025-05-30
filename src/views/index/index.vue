@@ -4,7 +4,12 @@
       <!-- <KLink></KLink> -->
     </div>
     <div style="padding: 0 30px;">
-      <h1> {{ count }}</h1>
+      <br>
+      <h1 class="time">{{ DataMsg.time }}
+        <br>
+        第 {{ count }} 次更新
+      </h1>
+      <br>
       <el-radio-group v-model="symbol" size="large" @change="RadioChange">
         <el-radio-button label="BTCUSDT" value="BTCUSDT"></el-radio-button>
         <el-radio-button label="ETHUSDT" value="ETHUSDT"></el-radio-button>
@@ -20,70 +25,66 @@
           <el-radio-button label="1d" value="1d"></el-radio-button>
         </el-radio-group>
       </div>
-      <br>
-      <div class="time">{{ DataMsg.time }}</div>
-      <br>
-      <div>
-        <div class="time">趋势类指标(判断方向)</div>
-        <h4>EMA(指数移动平均线):</h4><span>{{ DataMsg.suggestions.EMA }}</span>
-        <h4>MACD:</h4><span>{{ DataMsg.suggestions.MACD }}</span>
-        <h4>SMA(简单移动平均线):</h4><span>{{ DataMsg.suggestions.SMA }}</span>
-      </div>
-      <br>
-      <div>
-        <div class="time">震荡类指标(超买超卖)</div>
-        <h4>RSI(相对强弱指数):</h4><span>{{ DataMsg.suggestions.RSI }}</span>
-        <h4>Stochastic RSI(随机RSI):</h4><span>{{ DataMsg.suggestions.StochasticRSI }}</span>
-        <h4>Bollinger Bands(布林带):</h4><span>{{ DataMsg.suggestions.Boll }}</span>
-      </div>
-      <br>
-      <div>
-        <div class="time">短线组合</div>
-        <h4>EMA + MACD</h4>
-        <div>{{ DataMsg.suggestions.EMA }}</div>
-        <div>{{ DataMsg.suggestions.MACD }}</div>
-        <h4>Boll + RSI</h4>
-        <div>{{ DataMsg.suggestions.Boll }}</div>
-        <div>{{ DataMsg.suggestions.RSI }}</div>
-        <h4>Stochastic RSI + EMA</h4>
-        <div>{{ DataMsg.suggestions.StochasticRSI }}</div>
-        <div>{{ DataMsg.suggestions.EMA }}</div>
-
-      </div>
-      <br>
-      <div>
-        <div class="time">支撑和阻力</div>
-        <div style="display: flex;">
-          <div>
-            <h4>支撑</h4>
-            <div v-for="(item, index) in DataMsg.supportLevels" :key="index">
-              <span>{{ item.level }}&nbsp;&nbsp;</span>
-              <strong>({{ item.count }}次)</strong>
-            </div>
-          </div>
-          <div style="width: 50px;"></div>
-          <div>
-            <h4>阻力</h4>
-            <div v-for="(item, index) in DataMsg.resistanceLevels" :key="index">
-              <span>{{ item.level }}&nbsp;&nbsp;</span>
-              <strong>({{ item.count }}次)</strong>
-            </div>
-          </div>
+      <div style="display: flex;flex-wrap: wrap;">
+        <div>
+          <div class="time">趋势类指标(判断方向)</div>
+          <h4>EMA(指数移动平均线):</h4><span>{{ DataMsg.suggestions.EMA }}</span>
+          <h4>MACD:</h4><span>{{ DataMsg.suggestions.MACD }}</span>
+          <h4>SMA(简单移动平均线):</h4><span>{{ DataMsg.suggestions.SMA }}</span>
+        </div>
+        <div style="width: 50px;"></div>
+        <div>
+          <div class="time">震荡类指标(超买超卖)</div>
+          <h4>RSI(相对强弱指数):</h4><span>{{ DataMsg.suggestions.RSI }}</span>
+          <h4>Stochastic RSI(随机RSI):</h4><span>{{ DataMsg.suggestions.StochasticRSI }}</span>
+          <h4>Bollinger Bands(布林带):</h4><span>{{ DataMsg.suggestions.Boll }}</span>
+        </div>
+        <div style="width: 50px;"></div>
+        <div>
+          <div class="time">短线组合</div>
+          <h4>EMA + MACD</h4>
+          <div>{{ DataMsg.suggestions.EMA }}</div>
+          <div>{{ DataMsg.suggestions.MACD }}</div>
+          <h4>Boll + RSI</h4>
+          <div>{{ DataMsg.suggestions.Boll }}</div>
+          <div>{{ DataMsg.suggestions.RSI }}</div>
+          <h4>Stochastic RSI + EMA</h4>
+          <div>{{ DataMsg.suggestions.StochasticRSI }}</div>
+          <div>{{ DataMsg.suggestions.EMA }}</div>
         </div>
       </div>
       <br>
-      <div>
-        <div class="time">K线结构分析 + 量价分析</div>
-        <h4>K线结构分析</h4>
-        <div>{{ DataMsg.patternText }}</div>
-        <h4>量价分析</h4>
-        <div>{{ DataMsg.volumeText }}</div>
-      </div>
-
-      <br>
-      <div>
-        <div class="time">策略建议</div>
-        <div v-html="DataMsg.strategy"></div>
+      <div style="display: flex;flex-wrap: wrap;">
+        <div>
+          <div class="time">支撑和阻力</div>
+          <div style="display: flex;">
+            <div>
+              <h4>支撑</h4>
+              <div v-for="(item, index) in DataMsg.supportLevels" :key="index" :style="{color:item.count>10?'red':''}">
+                <span>{{ item.level }}&nbsp;&nbsp;</span>
+                <strong>({{ item.count }}次)</strong>
+              </div>
+            </div>
+            <div style="width: 50px;"></div>
+            <div>
+              <h4>阻力</h4>
+              <div v-for="(item, index) in DataMsg.resistanceLevels" :key="index" :style="{color:item.count>10?'red':''}">
+                <span>{{ item.level }}&nbsp;&nbsp;</span>
+                <strong>({{ item.count }}次)</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="width: 50px;"></div>
+        <div>
+          <div class="time">K线结构分析 + 量价分析</div>
+          <h4>K线结构分析</h4>
+          <div>{{ DataMsg.patternText }}</div>
+          <h4>量价分析</h4>
+          <div>{{ DataMsg.volumeText }}</div>
+          <h4>策略建议</h4>
+          <div v-html="DataMsg.strategy"></div>
+        </div>
       </div>
     </div>
     <div style="height: 50px;"></div>
