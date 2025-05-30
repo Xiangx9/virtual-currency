@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <!-- <KLink></KLink> -->
+      <KLink></KLink>
     </div>
     <div style="padding: 0 30px;">
       <h1> {{ count }}</h1>
@@ -25,61 +25,35 @@
       <br>
       <div>
         <div class="time">趋势类指标(判断方向)</div>
-        <h4>EMA(指数移动平均线):</h4><span>{{ DataMsg.suggestions.EMA }}</span>
-        <h4>MACD:</h4><span>{{ DataMsg.suggestions.MACD }}</span>
-        <h4>SMA(简单移动平均线):</h4><span>{{ DataMsg.suggestions.SMA }}</span>
+        <h4>EMA(指数移动平均线):</h4><span>{{ DataMsg.EMA }}</span>
+        <h4>MACD:</h4><span>{{ DataMsg.MACD }}</span>
+        <h4>SMA(简单移动平均线):</h4><span>{{ DataMsg.SMA }}</span>
       </div>
       <br>
       <div>
         <div class="time">震荡类指标(超买超卖)</div>
-        <h4>RSI(相对强弱指数):</h4><span>{{ DataMsg.suggestions.RSI }}</span>
-        <h4>Stochastic RSI(随机RSI):</h4><span>{{ DataMsg.suggestions.StochasticRSI }}</span>
-        <h4>Bollinger Bands(布林带):</h4><span>{{ DataMsg.suggestions.Boll }}</span>
+        <h4>RSI(相对强弱指数):</h4><span>{{ DataMsg.RSI }}</span>
+        <h4>Stochastic RSI(随机RSI):</h4><span>{{ DataMsg.StochasticRSI }}</span>
+        <h4>Bollinger Bands(布林带):</h4><span>{{ DataMsg.Boll }}</span>
       </div>
       <br>
       <div>
         <div class="time">短线组合</div>
         <h4>EMA + MACD</h4>
-        <div>{{ DataMsg.suggestions.EMA }}</div>
-        <div>{{ DataMsg.suggestions.MACD }}</div>
+        <div>{{ DataMsg.EMA }}</div>
+        <div>{{ DataMsg.MACD }}</div>
         <h4>Boll + RSI</h4>
-        <div>{{ DataMsg.suggestions.Boll }}</div>
-        <div>{{ DataMsg.suggestions.RSI }}</div>
+        <div>{{ DataMsg.Boll }}</div>
+        <div>{{ DataMsg.RSI }}</div>
         <h4>Stochastic RSI + EMA</h4>
-        <div>{{ DataMsg.suggestions.StochasticRSI }}</div>
-        <div>{{ DataMsg.suggestions.EMA }}</div>
-
+        <div>{{ DataMsg.StochasticRSI }}</div>
+        <div>{{ DataMsg.EMA }}</div>
       </div>
       <br>
       <div>
-        <div class="time">支撑和阻力</div>
-        <div style="display: flex;">
-          <div>
-            <h4>支撑</h4>
-            <div v-for="(item, index) in DataMsg.supportLevels" :key="index">
-              <span>{{ item.level }}&nbsp;&nbsp;</span>
-              <strong>({{ item.count }}次)</strong>
-            </div>
-          </div>
-          <div style="width: 50px;"></div>
-          <div>
-            <h4>阻力</h4>
-            <div v-for="(item, index) in DataMsg.resistanceLevels" :key="index">
-              <span>{{ item.level }}&nbsp;&nbsp;</span>
-              <strong>({{ item.count }}次)</strong>
-            </div>
-          </div>
-        </div>
+        <div class="time">K线结构分析</div>
+        <div>{{ DataMsg.structure }}</div>
       </div>
-      <br>
-      <div>
-        <div class="time">K线结构分析 + 量价分析</div>
-        <h4>K线结构分析</h4>
-        <div>{{ DataMsg.patternText }}</div>
-        <h4>量价分析</h4>
-        <div>{{ DataMsg.volumeText }}</div>
-      </div>
-
       <br>
       <div>
         <div class="time">策略建议</div>
@@ -108,9 +82,21 @@ let symbol = ref('BTCUSDT')
 let interval = ref('15m')
 let DataMsg = ref({
   time: '', // 时间
-  suggestions: {},
-  supportLevels: [],
-  resistanceLevels: [],
+  // 趋势类指标(判断方向)
+  EMA: '',
+  MACD: '',
+  SMA: '',
+  // 震荡类指标(超买超卖)
+  RSI: '',
+  StochasticRSI: '',
+  Boll: '',
+  // 策略建议
+  structure: '',
+  strategy: '',
+  // 支撑/压力位
+  support: '',
+  resistance: '',
+
 })
 const getKlineData = async () => {
   try {
@@ -136,8 +122,6 @@ const analyze = async (KlineData,) => {
   }));
   const result = useStrategy(klines, symbol.value)
   DataMsg.value = result
-  console.log(`${symbol.value}分析结果：`, result);
-
 }
 
 const RadioChange = () => {

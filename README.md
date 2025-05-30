@@ -1,5 +1,17 @@
-# Vue 3 + Vite
-
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+  ├─ indicators/             // 所有技术指标
+  │    ├─ macd.js
+  │    ├─ atr.js
+  │    ├─ supertrend.js
+  │    ├─ adx.js
+  │    └─ ...
+  ├─ helpers/
+  │    ├─ patterns.js         // K线形态识别
+  │    ├─ volumePrice.js      // 量价判断
+  │    ├─ tpSl.js             // 止盈止损模块
+  │    └─ supportResistance.js
+  ├─ engines/
+  │    ├─ scoring.js
+  │    └─ signalConfirm.js    // 多信号确认逻辑
+  ├─ cache/
+  │    └─ stateCache.js       // 用于判断信号变化
+  └─ index.js                 // useStrategy 主入口
