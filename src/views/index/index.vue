@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <!-- <KLink></KLink> -->
+      <KlineChart :symbol="symbol" :interval="interval"></KlineChart>
     </div>
     <div style="padding: 0 30px;">
       <br>
@@ -93,7 +93,7 @@
 
 <script setup>
 import './index.scss'
-import KLink from '@/components/KLink.vue'
+import KlineChart from '@/components/KlineChart.vue'
 import { useIntervalFn } from '@vueuse/core'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { getKline } from './api'

@@ -9,6 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     ElRadioButton: typeof import('element-plus/es')['ElRadioButton']
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
+    Img: typeof import('./src/components/img.vue')['default']
+    KlineChart: typeof import('./src/components/KlineChart.vue')['default']
     KLink: typeof import('./src/components/KLink.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
