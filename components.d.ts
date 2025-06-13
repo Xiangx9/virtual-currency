@@ -11,7 +11,7 @@ declare module 'vue' {
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     Img: typeof import('./src/components/img.vue')['default']
     KlineChart: typeof import('./src/components/KlineChart.vue')['default']
-    KLink: typeof import('./src/components/KLink.vue')['default']
+    NumberFlip: typeof import('./src/components/NumberFlip.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

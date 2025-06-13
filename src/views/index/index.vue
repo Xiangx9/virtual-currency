@@ -25,6 +25,8 @@
           <el-radio-button label="1d" value="1d"></el-radio-button>
         </el-radio-group>
       </div>
+      <br>
+      <NumberFlip :value="numberStr" />
       <div style="display: flex;flex-wrap: wrap;">
         <div>
           <div class="time">趋势类指标(判断方向)</div>
@@ -60,7 +62,8 @@
           <div style="display: flex;">
             <div>
               <h4>支撑</h4>
-              <div v-for="(item, index) in DataMsg.supportLevels" :key="index" :style="{color:item.count>10?'red':''}">
+              <div v-for="(item, index) in DataMsg.supportLevels" :key="index"
+                :style="{ color: item.count > 10 ? 'red' : '' }">
                 <span>{{ item.level }}&nbsp;&nbsp;</span>
                 <strong>({{ item.count }}次)</strong>
               </div>
@@ -68,7 +71,8 @@
             <div style="width: 50px;"></div>
             <div>
               <h4>阻力</h4>
-              <div v-for="(item, index) in DataMsg.resistanceLevels" :key="index" :style="{color:item.count>10?'red':''}">
+              <div v-for="(item, index) in DataMsg.resistanceLevels" :key="index"
+                :style="{ color: item.count > 3 ? 'red' : '' }">
                 <span>{{ item.level }}&nbsp;&nbsp;</span>
                 <strong>({{ item.count }}次)</strong>
               </div>
@@ -94,10 +98,14 @@
 <script setup>
 import './index.scss'
 import KlineChart from '@/components/KlineChart.vue'
+import NumberFlip from "@/components/NumberFlip.vue";
+
 import { useIntervalFn } from '@vueuse/core'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { getKline } from './api'
 import { useStrategy } from './useStrategy'
+
+let numberStr = ref('');
 
 let count = ref(0)
 const { pause, resume, isActive } = useIntervalFn(() => {
@@ -137,6 +145,7 @@ const analyze = async (KlineData,) => {
   }));
   const result = useStrategy(klines, symbol.value)
   DataMsg.value = result
+  numberStr.value = result.suggestions.EMA.split("=")[1].split(".")[0]
   console.log(`${symbol.value}分析结果：`, result);
 
 }
