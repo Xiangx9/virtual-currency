@@ -26,7 +26,17 @@
         </el-radio-group>
       </div>
       <br>
-      <NumberFlip :value="numberStr" />
+      <div>
+        <NumberFlip :value="DataMsg.numberStr" />
+        <div style="display: flex;">
+          <NumberFlip :value="DataMsg.keySupport" />
+          <h1 class="time"> 支</h1>
+        </div>
+        <div style="display: flex;">
+          <NumberFlip :value="DataMsg.keyResistance" />
+          <h1 class="time">阻</h1>
+        </div>
+      </div>
       <div style="display: flex;flex-wrap: wrap;">
         <div>
           <div class="time">趋势类指标(判断方向)</div>
@@ -105,8 +115,6 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { getKline } from './api'
 import { useStrategy } from './useStrategy'
 
-let numberStr = ref('');
-
 let count = ref(0)
 const { pause, resume, isActive } = useIntervalFn(() => {
   count.value++
@@ -145,7 +153,6 @@ const analyze = async (KlineData,) => {
   }));
   const result = useStrategy(klines, symbol.value)
   DataMsg.value = result
-  numberStr.value = result.suggestions.EMA.split("=")[1].split(".")[0]
   console.log(`${symbol.value}分析结果：`, result);
 
 }
