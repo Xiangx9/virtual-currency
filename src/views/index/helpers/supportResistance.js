@@ -8,18 +8,19 @@ export function detectSupportResistanceV2(klines, windowSize = 2, minTouches = 2
     return { supportLevels: [], resistanceLevels: [] }
   }
 
+  const recentKlines = klines.slice(-Math.min(klines.length, 120))
   const supportCandidates = []
   const resistanceCandidates = []
 
-  for (let i = windowSize; i < klines.length - windowSize; i++) {
-    const lows = klines.slice(i - windowSize, i + windowSize + 1).map(k => k.low)
-    const highs = klines.slice(i - windowSize, i + windowSize + 1).map(k => k.high)
+  for (let i = windowSize; i < recentKlines.length - windowSize; i++) {
+    const lows = recentKlines.slice(i - windowSize, i + windowSize + 1).map(k => k.low)
+    const highs = recentKlines.slice(i - windowSize, i + windowSize + 1).map(k => k.high)
 
-    const isSupport = klines[i].low === Math.min(...lows)
-    const isResistance = klines[i].high === Math.max(...highs)
+    const isSupport = recentKlines[i].low === Math.min(...lows)
+    const isResistance = recentKlines[i].high === Math.max(...highs)
 
-    if (isSupport) supportCandidates.push(klines[i].low)
-    if (isResistance) resistanceCandidates.push(klines[i].high)
+    if (isSupport) supportCandidates.push(recentKlines[i].low)
+    if (isResistance) resistanceCandidates.push(recentKlines[i].high)
   }
 
   const groupSimilar = (levels) => {
@@ -43,11 +44,8 @@ export function detectSupportResistanceV2(klines, windowSize = 2, minTouches = 2
 
     return grouped
       .filter(g => g.count >= minTouches)
-      .map(g => ({
-        level: parseFloat(g.level.toFixed(2)),
-        count: g.count
-      }))
-      .sort((a, b) => a.level - b.level)
+      .map(g => ({ level: g.level, count: g.count }))
+      .sort((a, b) => b.count - a.count || a.level - b.level)
   }
 
   let supportLevels = groupSimilar(supportCandidates)
@@ -56,12 +54,12 @@ export function detectSupportResistanceV2(klines, windowSize = 2, minTouches = 2
   // fallback（仅在完全为空时）提供最近的可视水平
   if (resistanceLevels.length === 0 && resistanceCandidates.length > 0) {
     const fallback = Math.max(...resistanceCandidates)
-    resistanceLevels.push({ level: parseFloat(fallback.toFixed(2)), count: 1 })
+    resistanceLevels.push({ level: fallback, count: 1 })
   }
 
   if (supportLevels.length === 0 && supportCandidates.length > 0) {
     const fallback = Math.min(...supportCandidates)
-    supportLevels.push({ level: parseFloat(fallback.toFixed(2)), count: 1 })
+    supportLevels.push({ level: fallback, count: 1 })
   }
 
   return {

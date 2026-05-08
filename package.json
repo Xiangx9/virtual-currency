@@ -19,6 +19,7 @@
     "element-plus": "^2.3.14",
     "goeasy": "^2.8.8",
     "imagehover.css": "^2.0.0",
+    "lightweight-charts": "^5.2.0",
     "motion-v": "^1.0.0-beta.2",
     "mqtt": "^5.3.3",
     "pinia": "^2.1.7",
@@ -55,7 +56,7 @@
     "unplugin-auto-import": "^0.16.6",
     "unplugin-vue-components": "^0.25.2",
     "unplugin-vue-router": "^0.10.7",
-    "vite": "^4.4.9"
+    "vite": "^4.5.14"
   },
   "description": "This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api[...])",
   "main": "vite.config.js",
